@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { personalInfo } from '../data/portfolioData';
 import { ChevronDown, ArrowUpRight, MessageCircle, Sparkles, Award, Layers, Heart, Zap } from 'lucide-react';
 
-/* --- Animated Counter Component (Counts from 0 up to target) --- */
-function AnimatedCounter({ end, duration = 2200, suffix = "" }) {
+/* --- Animated Counter Component (Smooth Ease-Out Deceleration from 0) --- */
+function AnimatedCounter({ end, duration = 2000, suffix = "" }) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -13,7 +13,7 @@ function AnimatedCounter({ end, duration = 2200, suffix = "" }) {
     const step = (timestamp) => {
       if (!startTimestamp) startTimestamp = timestamp;
       const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-      // Exponential ease-out for smooth decelerating count
+      // Exponential ease-out curve for natural deceleration
       const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
       setCount(Math.floor(easeProgress * end));
 
@@ -31,8 +31,8 @@ function AnimatedCounter({ end, duration = 2200, suffix = "" }) {
   return <span>{count.toLocaleString()}{suffix}</span>;
 }
 
-/* --- Interactive 3D Glass Circles, Torus & Sphere with Scroll-Driven Parallax --- */
-function HeroGlassCircles() {
+/* --- Giant Interactive 3D Glass Circles, Torus & Spheres with Dynamic Scroll Parallax & Mouse Tilt --- */
+function HeroGlassCircles({ mouseX = 0, mouseY = 0 }) {
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
@@ -51,296 +51,385 @@ function HeroGlassCircles() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Parallax translation factors based on scroll
-  const torusOffsetY = scrollY * 0.22;
-  const torusRotate = scrollY * 0.09;
-  const sphereOffsetX = scrollY * -0.15;
-  const sphereOffsetY = scrollY * -0.28;
-  const sphereScale = Math.max(0.82, 1 - scrollY * 0.0004);
-  const innerRingRotate = scrollY * -0.12;
-  const innerRingOffsetY = scrollY * 0.16;
-  const badgeOffsetY = scrollY * 0.32;
-  const sat1OffsetX = scrollY * 0.18;
-  const sat1OffsetY = scrollY * -0.2;
+  // Multi-axis high-dynamic scroll parallax calculations
+  const torusOffsetY = scrollY * 0.38;
+  const torusRotateZ = scrollY * 0.28;
+  const torusTiltX = mouseY * -14 + scrollY * 0.14;
+  const torusTiltY = mouseX * 16 + scrollY * 0.18;
+  const torusScale = 1 + Math.min(scrollY * 0.0003, 0.15);
+
+  // Foreground crystal sphere moves on an active outward diagonal trajectory with 3D projection
+  const sphereOffsetX = mouseX * -24 - scrollY * 0.38;
+  const sphereOffsetY = mouseY * -24 - scrollY * 0.52;
+  const sphereScale = Math.min(1.22, Math.max(0.85, 1 + scrollY * 0.0006));
+
+  // Inner orbital ring counter-rotates dynamically
+  const innerRingRotateZ = mouseX * 12 - scrollY * 0.45;
+  const innerRingOffsetY = scrollY * 0.26;
+  const innerRingTiltX = mouseY * -8 + scrollY * 0.12;
+
+  // Floating satellite spheres & orbital pearls
+  const sat1OffsetX = mouseX * 32 + scrollY * 0.48;
+  const sat1OffsetY = mouseY * 32 - scrollY * 0.42;
+  const sat2OffsetX = mouseX * -20 - scrollY * 0.35;
+  const sat2OffsetY = mouseY * -20 + scrollY * 0.45;
+  const sat3OffsetX = mouseX * 18 + scrollY * 0.32;
+  const sat3OffsetY = mouseY * 18 - scrollY * 0.3;
+
+  // Floating glass badges
+  const badgeOffsetY = mouseY * -10 + scrollY * 0.52;
+  const badgeRotate = scrollY * 0.05;
+  const statusOffsetY = mouseY * 10 - scrollY * 0.28;
 
   return (
-    <div className="relative w-full max-w-[420px] sm:max-w-[480px] lg:max-w-[540px] aspect-square mx-auto flex items-center justify-center select-none pointer-events-none">
-      
-      {/* 1. Ambient Background Violet Aurora Glow */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-[#7c3aed]/30 via-[#9333ea]/20 to-[#c084fc]/15 rounded-full blur-[90px] transform scale-110 pointer-events-none" />
-      <div className="absolute w-72 h-72 rounded-full bg-[#8b5cf6]/30 blur-[70px] pointer-events-none" />
+    <div
+      className="relative w-full max-w-[580px] sm:max-w-[650px] lg:max-w-[720px] xl:max-w-[800px] aspect-[1.16/1] mx-auto flex items-center justify-center select-none"
+      style={{
+        perspective: '1500px',
+        transformStyle: 'preserve-3d',
+      }}
+    >
+      {/* 1. Deep Atmospheric Purple Caustic Auras (Spreads across right & center) */}
+      <div
+        className="absolute -inset-12 bg-gradient-to-tr from-[#7c3aed]/40 via-[#9333ea]/30 to-[#c084fc]/20 rounded-full blur-[110px] transform scale-125 pointer-events-none -z-10 transition-transform duration-300"
+        style={{
+          transform: `scale(${1 + Math.min(scrollY * 0.0005, 0.2)})`,
+          opacity: Math.min(1, 0.85 + scrollY * 0.0006),
+        }}
+      />
+      <div className="absolute w-[440px] h-[440px] rounded-full bg-[#a855f7]/30 blur-[95px] pointer-events-none -z-10" />
+      <div className="absolute top-1/4 right-8 w-80 h-80 rounded-full bg-[#6b21a8]/45 blur-[85px] pointer-events-none -z-10" />
 
-      {/* 2. Main 3D Glass Composition (SVG + Layered Glass Shader) */}
+      {/* 2. Main Giant 3D Glass SVG Composition */}
       <svg
-        viewBox="0 0 600 600"
+        viewBox="0 0 850 750"
         className="w-full h-full overflow-visible"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
-          {/* Outer Torus Body Gradient (Luminous Purple Glass Tones) */}
-          <linearGradient id="torusBodyGrad" x1="120" y1="140" x2="480" y2="440" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#f3e8ff" stopOpacity="0.9" />
-            <stop offset="25%" stopColor="#c084fc" stopOpacity="0.7" />
-            <stop offset="55%" stopColor="#9333ea" stopOpacity="0.45" />
-            <stop offset="85%" stopColor="#581c87" stopOpacity="0.8" />
-            <stop offset="100%" stopColor="#1e0a3c" stopOpacity="0.95" />
+          {/* Main Giant Torus Body Gradient (Deep Obsidian & Radiant Violet) */}
+          <linearGradient id="torusGradLarge" x1="160" y1="180" x2="680" y2="580" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stopColor="#f5edff" stopOpacity="0.95" />
+            <stop offset="18%" stopColor="#d8b4fe" stopOpacity="0.8" />
+            <stop offset="42%" stopColor="#9333ea" stopOpacity="0.5" />
+            <stop offset="70%" stopColor="#581c87" stopOpacity="0.75" />
+            <stop offset="90%" stopColor="#2e1065" stopOpacity="0.95" />
+            <stop offset="100%" stopColor="#120424" stopOpacity="0.98" />
           </linearGradient>
 
-          {/* Torus Specular Rim Highlight */}
-          <linearGradient id="torusRimLight" x1="200" y1="120" x2="480" y2="280" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.95" />
-            <stop offset="35%" stopColor="#f3e8ff" stopOpacity="0.8" />
-            <stop offset="70%" stopColor="#c084fc" stopOpacity="0.3" />
+          {/* Torus Specular Rim Highlight Light */}
+          <linearGradient id="torusRimSpecular" x1="280" y1="160" x2="680" y2="380" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.98" />
+            <stop offset="30%" stopColor="#f3e8ff" stopOpacity="0.85" />
+            <stop offset="65%" stopColor="#c084fc" stopOpacity="0.4" />
             <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
           </linearGradient>
 
-          {/* Inner Torus Gradient */}
-          <linearGradient id="innerRingGrad" x1="450" y1="180" x2="200" y2="420" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#c084fc" stopOpacity="0.8" />
-            <stop offset="40%" stopColor="#7c3aed" stopOpacity="0.45" />
-            <stop offset="80%" stopColor="#3b0764" stopOpacity="0.75" />
-            <stop offset="100%" stopColor="#a855f7" stopOpacity="0.9" />
+          {/* Inner Counter Ring Gradient */}
+          <linearGradient id="innerRingGradLarge" x1="620" y1="240" x2="280" y2="540" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stopColor="#e9d5ff" stopOpacity="0.85" />
+            <stop offset="35%" stopColor="#a855f7" stopOpacity="0.6" />
+            <stop offset="75%" stopColor="#4c1d95" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#c084fc" stopOpacity="0.9" />
           </linearGradient>
 
-          {/* 3D Glass Sphere Body Gradient */}
-          <radialGradient id="sphereBodyGrad" cx="35%" cy="32%" r="68%">
-            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.8" />
-            <stop offset="18%" stopColor="#e9d5ff" stopOpacity="0.65" />
-            <stop offset="45%" stopColor="#a855f7" stopOpacity="0.6" />
-            <stop offset="75%" stopColor="#6b21a8" stopOpacity="0.88" />
-            <stop offset="100%" stopColor="#1c0738" stopOpacity="0.98" />
+          {/* Massive 3D Crystal Glass Sphere Body Shader */}
+          <radialGradient id="giantSphereBodyGrad" cx="34%" cy="30%" r="68%">
+            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.9" />
+            <stop offset="16%" stopColor="#f3e8ff" stopOpacity="0.75" />
+            <stop offset="40%" stopColor="#a855f7" stopOpacity="0.65" />
+            <stop offset="72%" stopColor="#6b21a8" stopOpacity="0.92" />
+            <stop offset="92%" stopColor="#2a084e" stopOpacity="0.98" />
+            <stop offset="100%" stopColor="#130324" stopOpacity="1" />
           </radialGradient>
 
-          {/* Sphere Specular Glint Highlight */}
-          <radialGradient id="sphereSpecular" cx="30%" cy="26%" r="35%">
-            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.95" />
-            <stop offset="30%" stopColor="#ffffff" stopOpacity="0.6" />
-            <stop offset="65%" stopColor="#f3e8ff" stopOpacity="0.15" />
+          {/* Sphere Specular Glint Reflection */}
+          <radialGradient id="giantSphereSpecular" cx="30%" cy="24%" r="35%">
+            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.98" />
+            <stop offset="32%" stopColor="#ffffff" stopOpacity="0.7" />
+            <stop offset="70%" stopColor="#f3e8ff" stopOpacity="0.15" />
             <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
           </radialGradient>
 
-          {/* Sphere Bottom Rim Light */}
-          <radialGradient id="sphereRimLight" cx="68%" cy="78%" r="40%">
-            <stop offset="0%" stopColor="#c084fc" stopOpacity="0.85" />
-            <stop offset="45%" stopColor="#8b5cf6" stopOpacity="0.4" />
+          {/* Sphere Bottom Caustic Rim Light */}
+          <radialGradient id="giantSphereRimBounce" cx="72%" cy="80%" r="42%">
+            <stop offset="0%" stopColor="#d8b4fe" stopOpacity="0.85" />
+            <stop offset="40%" stopColor="#a855f7" stopOpacity="0.45" />
             <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0" />
           </radialGradient>
 
-          {/* Satellite Sphere Gradient */}
-          <radialGradient id="satelliteGrad1" cx="35%" cy="30%" r="65%">
-            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.9" />
-            <stop offset="30%" stopColor="#d8b4fe" stopOpacity="0.65" />
-            <stop offset="70%" stopColor="#7e22ce" stopOpacity="0.85" />
-            <stop offset="100%" stopColor="#240747" stopOpacity="0.95" />
+          {/* Satellite Spheres Gradient */}
+          <radialGradient id="satOrbGrad" cx="34%" cy="30%" r="65%">
+            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.95" />
+            <stop offset="28%" stopColor="#e9d5ff" stopOpacity="0.75" />
+            <stop offset="68%" stopColor="#8b5cf6" stopOpacity="0.85" />
+            <stop offset="100%" stopColor="#2e1065" stopOpacity="0.98" />
           </radialGradient>
 
           {/* Glow Filters */}
-          <filter id="purpleGlowFilter" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="16" result="blur" />
+          <filter id="purpleGlowLarge" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="22" result="blur" />
             <feComposite in="SourceGraphic" in2="blur" operator="over" />
           </filter>
 
-          <filter id="softGlowFilter" x="-30%" y="-30%" width="160%" height="160%">
-            <feGaussianBlur stdDeviation="24" result="blur" />
+          <filter id="softGlowLarge" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="34" result="blur" />
             <feComposite in="SourceGraphic" in2="blur" operator="over" />
           </filter>
         </defs>
 
-        {/* --- GROUP 1: Outer Glass Torus (Rotates & Translates with scroll) --- */}
+        {/* --- GROUP 1: GIANT OUTER 3D GLASS TORUS (Rotates, Tilts & Translates with Scroll & Mouse) --- */}
         <g
           style={{
-            transform: `translate3d(0, ${torusOffsetY}px, 0) rotate(${torusRotate}deg)`,
-            transformOrigin: '330px 270px',
-            transition: 'transform 0.1s cubic-bezier(0.1, 0.9, 0.2, 1)',
-          }}
-        >
-          {/* Back Torus Drop Glow */}
-          <ellipse
-            cx="330"
-            cy="270"
-            rx="195"
-            ry="145"
-            transform="rotate(-28 330 270)"
-            stroke="#a855f7"
-            strokeWidth="50"
-            strokeOpacity="0.25"
-            filter="url(#softGlowFilter)"
-          />
-
-          {/* Outer Glass Torus Tube (Thick glass ring with refraction) */}
-          <ellipse
-            cx="330"
-            cy="270"
-            rx="195"
-            ry="145"
-            transform="rotate(-28 330 270)"
-            stroke="url(#torusBodyGrad)"
-            strokeWidth="48"
-            strokeLinecap="round"
-          />
-
-          {/* Internal Refraction Line */}
-          <ellipse
-            cx="330"
-            cy="270"
-            rx="195"
-            ry="145"
-            transform="rotate(-28 330 270)"
-            stroke="rgba(255, 255, 255, 0.25)"
-            strokeWidth="2"
-          />
-
-          {/* Specular Edge Highlight (Bright caustic rim light on top-right) */}
-          <path
-            d="M 230 150 C 330 110, 460 160, 490 270"
-            stroke="url(#torusRimLight)"
-            strokeWidth="10"
-            strokeLinecap="round"
-            filter="url(#purpleGlowFilter)"
-          />
-          <path
-            d="M 240 148 C 330 112, 450 162, 480 260"
-            stroke="#ffffff"
-            strokeWidth="3.5"
-            strokeLinecap="round"
-          />
-        </g>
-
-        {/* --- GROUP 2: Inner Nested Glass Ring (Counter-rotating parallax) --- */}
-        <g
-          style={{
-            transform: `translate3d(0, ${innerRingOffsetY}px, 0) rotate(${innerRingRotate}deg)`,
-            transformOrigin: '335px 275px',
-            transition: 'transform 0.1s cubic-bezier(0.1, 0.9, 0.2, 1)',
-          }}
-        >
-          <ellipse
-            cx="335"
-            cy="275"
-            rx="125"
-            ry="85"
-            transform="rotate(38 335 275)"
-            stroke="url(#innerRingGrad)"
-            strokeWidth="24"
-            strokeOpacity="0.85"
-          />
-
-          <path
-            d="M 370 210 C 420 240, 430 300, 390 340"
-            stroke="rgba(255, 255, 255, 0.75)"
-            strokeWidth="3"
-            strokeLinecap="round"
-          />
-        </g>
-
-        {/* --- GROUP 3: Foreground 3D Crystal Glass Sphere (Drifts smoothly on scroll) --- */}
-        <g
-          style={{
-            transform: `translate3d(${sphereOffsetX}px, ${sphereOffsetY}px, 0) scale(${sphereScale})`,
-            transformOrigin: '220px 370px',
-            transition: 'transform 0.1s cubic-bezier(0.1, 0.9, 0.2, 1)',
-          }}
-        >
-          {/* Sphere Ground Glow & Ambient Shadow */}
-          <ellipse
-            cx="220"
-            cy="470"
-            rx="80"
-            ry="25"
-            fill="#581c87"
-            fillOpacity="0.5"
-            filter="url(#softGlowFilter)"
-          />
-
-          {/* Sphere Base Body */}
-          <circle
-            cx="220"
-            cy="370"
-            r="88"
-            fill="url(#sphereBodyGrad)"
-            stroke="rgba(255, 255, 255, 0.35)"
-            strokeWidth="1.5"
-          />
-
-          {/* Internal Caustic Depth Glow */}
-          <circle
-            cx="220"
-            cy="370"
-            r="86"
-            fill="url(#sphereRimLight)"
-          />
-
-          {/* Specular White Hotspot Glint */}
-          <circle
-            cx="220"
-            cy="370"
-            r="84"
-            fill="url(#sphereSpecular)"
-          />
-
-          {/* Top Crisp White Reflection Arc */}
-          <ellipse
-            cx="195"
-            cy="325"
-            rx="24"
-            ry="12"
-            transform="rotate(-30 195 325)"
-            fill="rgba(255, 255, 255, 0.85)"
-            filter="blur(1px)"
-          />
-        </g>
-
-        {/* --- GROUP 4: Satellite Floating Glass Beads --- */}
-        {/* Satellite 1 (Top-right floating sphere) */}
-        <g
-          style={{
-            transform: `translate3d(${sat1OffsetX}px, ${sat1OffsetY}px, 0)`,
+            transform: `translate3d(0, ${torusOffsetY}px, 0) rotateX(${torusTiltX}deg) rotateY(${torusTiltY}deg) rotateZ(${torusRotateZ}deg) scale(${torusScale})`,
+            transformOrigin: '460px 360px',
             transition: 'transform 0.12s cubic-bezier(0.1, 0.9, 0.2, 1)',
           }}
         >
-          <circle
-            cx="470"
-            cy="180"
-            r="24"
-            fill="url(#satelliteGrad1)"
-            stroke="rgba(255, 255, 255, 0.4)"
-            strokeWidth="1"
-            filter="url(#purpleGlowFilter)"
+          {/* Ambient Glow Silhouette */}
+          <ellipse
+            cx="460"
+            cy="360"
+            rx="275"
+            ry="195"
+            transform="rotate(-28 460 360)"
+            stroke="#a855f7"
+            strokeWidth="75"
+            strokeOpacity="0.25"
+            filter="url(#softGlowLarge)"
           />
-          <circle cx="462" cy="172" r="5" fill="#ffffff" opacity="0.9" />
+
+          {/* Main Thick Glass Torus Tube */}
+          <ellipse
+            cx="460"
+            cy="360"
+            rx="275"
+            ry="195"
+            transform="rotate(-28 460 360)"
+            stroke="url(#torusGradLarge)"
+            strokeWidth="68"
+            strokeLinecap="round"
+          />
+
+          {/* Internal Glass Core Refraction Ring */}
+          <ellipse
+            cx="460"
+            cy="360"
+            rx="275"
+            ry="195"
+            transform="rotate(-28 460 360)"
+            stroke="rgba(255, 255, 255, 0.3)"
+            strokeWidth="3"
+          />
+
+          {/* Top Specular Rim Reflection Arc */}
+          <path
+            d="M 310 180 C 460 130, 660 190, 710 350"
+            stroke="url(#torusRimSpecular)"
+            strokeWidth="14"
+            strokeLinecap="round"
+            filter="url(#purpleGlowLarge)"
+          />
+          <path
+            d="M 330 178 C 470 132, 650 192, 695 335"
+            stroke="#ffffff"
+            strokeWidth="4.5"
+            strokeLinecap="round"
+          />
+
+          {/* Secondary Bottom Caustic Glow Arc */}
+          <path
+            d="M 230 420 C 270 540, 480 580, 610 520"
+            stroke="url(#innerRingGradLarge)"
+            strokeWidth="8"
+            strokeLinecap="round"
+            opacity="0.6"
+          />
         </g>
 
-        {/* Satellite 2 (Bottom-right small sphere) */}
+        {/* --- GROUP 2: INNER NESTED FROSTED GLASS ORBIT RING (Counter-Rotates) --- */}
         <g
           style={{
-            transform: `translate3d(${-scrollY * 0.08}px, ${scrollY * 0.15}px, 0)`,
+            transform: `translate3d(0, ${innerRingOffsetY}px, 0) rotateX(${innerRingTiltX}deg) rotateZ(${innerRingRotateZ}deg)`,
+            transformOrigin: '465px 365px',
+            transition: 'transform 0.12s cubic-bezier(0.1, 0.9, 0.2, 1)',
+          }}
+        >
+          <ellipse
+            cx="465"
+            cy="365"
+            rx="175"
+            ry="115"
+            transform="rotate(36 465 365)"
+            stroke="url(#innerRingGradLarge)"
+            strokeWidth="32"
+            strokeOpacity="0.8"
+          />
+
+          {/* Slender Specular Edge */}
+          <path
+            d="M 520 270 C 600 320, 610 400, 550 460"
+            stroke="rgba(255, 255, 255, 0.8)"
+            strokeWidth="4"
+            strokeLinecap="round"
+          />
+
+          {/* Concentric Slender Orbital Filament */}
+          <ellipse
+            cx="465"
+            cy="365"
+            rx="130"
+            ry="85"
+            transform="rotate(-15 465 365)"
+            stroke="rgba(192, 132, 252, 0.35)"
+            strokeWidth="1.5"
+            strokeDasharray="6 8"
+          />
+        </g>
+
+        {/* --- GROUP 3: MASSIVE FOREGROUND 3D CRYSTAL GLASS SPHERE (Outward Parallax) --- */}
+        <g
+          style={{
+            transform: `translate3d(${sphereOffsetX}px, ${sphereOffsetY}px, 0) scale(${sphereScale})`,
+            transformOrigin: '300px 500px',
+            transition: 'transform 0.1s cubic-bezier(0.1, 0.9, 0.2, 1)',
+          }}
+        >
+          {/* Ground Contact Shadow & Diffuse Glow */}
+          <ellipse
+            cx="300"
+            cy="630"
+            rx="120"
+            ry="36"
+            fill="#05010b"
+            opacity="0.85"
+            filter="url(#purpleGlowLarge)"
+          />
+          <ellipse
+            cx="300"
+            cy="630"
+            rx="90"
+            ry="24"
+            fill="#7c3aed"
+            opacity="0.35"
+            filter="url(#purpleGlowLarge)"
+          />
+
+          {/* Sphere Body */}
+          <circle
+            cx="300"
+            cy="500"
+            r="115"
+            fill="url(#giantSphereBodyGrad)"
+          />
+
+          {/* Internal Caustic Transparency / Volume */}
+          <circle
+            cx="300"
+            cy="500"
+            r="114"
+            fill="none"
+            stroke="rgba(255, 255, 255, 0.2)"
+            strokeWidth="2.5"
+          />
+
+          {/* Bottom Ambient Bounce Light */}
+          <circle
+            cx="300"
+            cy="500"
+            r="115"
+            fill="url(#giantSphereRimBounce)"
+          />
+
+          {/* Primary High-Gloss Specular Highlight */}
+          <ellipse
+            cx="250"
+            cy="445"
+            rx="52"
+            ry="34"
+            transform="rotate(-30 250 445)"
+            fill="url(#giantSphereSpecular)"
+          />
+
+          {/* Secondary Razor Specular Glint */}
+          <circle
+            cx="240"
+            cy="435"
+            r="12"
+            fill="#ffffff"
+            opacity="0.9"
+          />
+          <circle
+            cx="248"
+            cy="442"
+            r="5"
+            fill="#ffffff"
+            opacity="0.75"
+          />
+        </g>
+
+        {/* --- GROUP 4: FLOATING SATELLITE SPHERES & ORBITAL BEADS --- */}
+        {/* Satellite 1 (Top-Right Floating Orb) */}
+        <g
+          style={{
+            transform: `translate3d(${sat1OffsetX}px, ${sat1OffsetY}px, 0)`,
             transition: 'transform 0.15s cubic-bezier(0.1, 0.9, 0.2, 1)',
           }}
         >
           <circle
-            cx="440"
-            cy="420"
-            r="16"
-            fill="url(#satelliteGrad1)"
+            cx="670"
+            cy="230"
+            r="38"
+            fill="url(#satOrbGrad)"
+            stroke="rgba(255, 255, 255, 0.45)"
+            strokeWidth="1.5"
+            filter="url(#purpleGlowLarge)"
+          />
+          <circle cx="658" cy="218" r="8" fill="#ffffff" opacity="0.9" />
+        </g>
+
+        {/* Satellite 2 (Bottom-Right Satellite Orb) */}
+        <g
+          style={{
+            transform: `translate3d(${sat2OffsetX}px, ${sat2OffsetY}px, 0)`,
+            transition: 'transform 0.15s cubic-bezier(0.1, 0.9, 0.2, 1)',
+          }}
+        >
+          <circle
+            cx="660"
+            cy="560"
+            r="24"
+            fill="url(#satOrbGrad)"
             stroke="rgba(255, 255, 255, 0.35)"
             strokeWidth="1"
           />
-          <circle cx="435" cy="415" r="3.5" fill="#ffffff" opacity="0.85" />
+          <circle cx="652" cy="552" r="5" fill="#ffffff" opacity="0.85" />
+        </g>
+
+        {/* Satellite 3 (Top-Left Micro Pearl) */}
+        <g
+          style={{
+            transform: `translate3d(${sat3OffsetX}px, ${sat3OffsetY}px, 0)`,
+            transition: 'transform 0.15s cubic-bezier(0.1, 0.9, 0.2, 1)',
+          }}
+        >
+          <circle cx="210" cy="260" r="12" fill="url(#satOrbGrad)" stroke="#ffffff" strokeWidth="0.8" opacity="0.85" />
+          <circle cx="206" cy="256" r="3" fill="#ffffff" />
         </g>
       </svg>
 
-      {/* 3. Floating Glass Info Card (Matching the floating card from reference image) */}
+      {/* 3. Floating Frosted Glass Badge (Top Right Overlap) */}
       <div
-        className="absolute top-8 sm:top-12 right-2 sm:-right-4 pointer-events-auto"
+        className="absolute top-4 sm:top-8 right-0 sm:-right-4 pointer-events-auto"
         style={{
-          transform: `translate3d(0, ${badgeOffsetY}px, 0)`,
+          transform: `translate3d(0, ${badgeOffsetY}px, 0) rotate(${badgeRotate}deg)`,
           transition: 'transform 0.12s cubic-bezier(0.1, 0.9, 0.2, 1)',
         }}
       >
-        <div className="bg-[#120826]/85 backdrop-blur-xl p-4 sm:p-5 rounded-2xl border border-[#3b1d6b] shadow-[0_8px_32px_rgba(0,0,0,0.5)] flex items-center gap-3.5 hover:border-brand-400 transition-all duration-300 group">
-          <div className="w-10 h-10 rounded-xl bg-brand-600/30 border border-brand-400/50 flex items-center justify-center text-brand-300 shadow-sm flex-shrink-0 group-hover:scale-110 transition-transform">
-            <Sparkles className="w-5 h-5 text-brand-400" />
+        <div className="bg-[#120826]/90 backdrop-blur-2xl p-3.5 sm:p-4.5 rounded-2xl border border-[#4c1d95]/70 shadow-[0_12px_40px_rgba(0,0,0,0.65)] flex items-center gap-3 hover:border-brand-400 hover:scale-105 transition-all duration-300 group">
+          <div className="w-10 h-10 rounded-xl bg-brand-600/30 border border-brand-400/50 flex items-center justify-center text-brand-300 shadow-[0_0_15px_rgba(168,85,247,0.35)] flex-shrink-0 group-hover:scale-110 transition-transform">
+            <Sparkles className="w-5 h-5 text-brand-300" />
           </div>
           <div>
             <p className="text-xs sm:text-sm font-bold text-white tracking-wide">
@@ -353,17 +442,17 @@ function HeroGlassCircles() {
         </div>
       </div>
 
-      {/* 4. Bottom floating status pill */}
+      {/* 4. Bottom Floating Availability Pill */}
       <div
-        className="absolute bottom-6 left-4 sm:left-6 pointer-events-auto"
+        className="absolute bottom-6 left-2 sm:left-4 pointer-events-auto"
         style={{
-          transform: `translate3d(0, ${-scrollY * 0.18}px, 0)`,
+          transform: `translate3d(0, ${statusOffsetY}px, 0)`,
           transition: 'transform 0.12s cubic-bezier(0.1, 0.9, 0.2, 1)',
         }}
       >
-        <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0e071e]/90 backdrop-blur-md border border-[#3b1d6b] shadow-lg">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-[11px] font-semibold text-gray-200">
+        <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0e071e]/90 backdrop-blur-xl border border-[#3b1d6b] shadow-[0_8px_25px_rgba(0,0,0,0.5)] hover:border-emerald-500/50 transition-colors">
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]" />
+          <span className="text-xs font-semibold text-gray-200">
             Available for Projects
           </span>
         </div>
@@ -373,51 +462,82 @@ function HeroGlassCircles() {
   );
 }
 
-/* --- Main Hero Section --- */
+/* --- Main Hero Section (Full Bleed, High-Impact Cinematic Composition) --- */
 export default function Hero() {
-  return (
-    <section className="relative overflow-hidden pt-28 pb-16 px-4 sm:px-8 max-w-7xl mx-auto flex flex-col justify-between">
-      {/* Background ambient purple aurora glow */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] sm:w-[950px] h-[400px] sm:h-[500px] bg-gradient-to-b from-[#8b5cf6]/25 via-[#6b21a8]/15 to-transparent rounded-full blur-[110px] pointer-events-none -z-10" />
-      <div className="absolute top-1/3 right-1/4 -translate-y-1/2 w-80 h-80 bg-brand-600/20 rounded-full blur-3xl pointer-events-none -z-10" />
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const heroRef = useRef(null);
 
-      {/* Main Split Grid: Left Copy & Right 3D Glass Rings */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center flex-1 my-auto w-full min-w-0">
+  // Smooth mouse move tracking over the hero section for 3D tilt
+  const handleMouseMove = (e) => {
+    if (!heroRef.current) return;
+    const rect = heroRef.current.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    const y = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+    setMousePos({ x, y });
+  };
+
+  const handleMouseLeave = () => {
+    setMousePos({ x: 0, y: 0 });
+  };
+
+  return (
+    <section
+      ref={heroRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="relative min-h-screen w-full overflow-hidden pt-20 sm:pt-24 lg:pt-22 pb-6 px-4 sm:px-8 lg:px-12 xl:px-16 flex flex-col justify-between bg-gradient-to-b from-[#110526] via-[#090217] to-[#05020a]"
+    >
+      {/* --- Full-Bleed Ambient Lighting Nebulae (Reaches all edges) --- */}
+      <div className="absolute top-0 right-0 w-[85vw] max-w-[1300px] h-[750px] bg-gradient-to-b from-[#7c3aed]/25 via-[#6b21a8]/15 to-transparent rounded-full blur-[140px] pointer-events-none -z-10" />
+      <div className="absolute top-1/4 -left-20 w-[600px] h-[600px] bg-gradient-to-tr from-[#581c87]/20 via-[#4c1d95]/10 to-transparent rounded-full blur-[120px] pointer-events-none -z-10" />
+      <div className="absolute bottom-10 left-1/3 w-[700px] h-[350px] bg-brand-600/15 rounded-full blur-[130px] pointer-events-none -z-10" />
+
+      {/* Subtle Matrix Ambient Mesh Glow across the hero */}
+      <div
+        className="absolute inset-0 opacity-[0.03] pointer-events-none -z-10"
+        style={{
+          backgroundImage: `radial-gradient(circle at 1px 1px, #ffffff 1px, transparent 0)`,
+          backgroundSize: '32px 32px',
+        }}
+      />
+
+      {/* --- ROW 1: SPLIT HERO (Text & CTAs Left, Giant 3D Glass Rings Right) --- */}
+      <div className="w-full max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-12 items-center flex-1 my-auto">
         
         {/* Left Column: Typographic & Profile Showcase */}
-        <div className="lg:col-span-7 xl:col-span-7 flex flex-col justify-center space-y-6 w-full min-w-0">
+        <div className="lg:col-span-6 xl:col-span-5 flex flex-col justify-center space-y-4 sm:space-y-5 w-full z-10">
           
           {/* Profession Pill / Tag - Glowing Purple Accent from Reference Image */}
-          <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-[#1c0d38] border border-[#58269e] text-purple-200 text-[10px] sm:text-xs uppercase tracking-wider font-bold w-fit max-w-full shadow-glow-sm">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1c0d38] border border-[#58269e] text-purple-200 text-xs uppercase tracking-wider font-bold w-fit shadow-[0_0_20px_rgba(147,51,234,0.35)]">
             <Sparkles className="w-3.5 h-3.5 text-brand-400 flex-shrink-0" />
             <span>Graphic & Visual Content Designer</span>
           </div>
 
           {/* Large Hero Title - Pure White Typography */}
-          <div>
-            <h1 className="text-3xl sm:text-5xl md:text-6xl xl:text-7xl font-extrabold font-heading text-white tracking-tight uppercase leading-[1.08] break-words">
+          <div className="space-y-1 sm:space-y-2">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl xl:text-7xl font-black font-heading text-white tracking-tight uppercase leading-[1.05]">
               {personalInfo.name}
             </h1>
-            <p className="mt-2 sm:mt-3 text-base sm:text-xl font-medium tracking-wide text-brand-300 font-heading">
-              {personalInfo.brand} <span className="text-gray-500 font-light mx-1 sm:mx-2">•</span> Design Profile & Portfolio
+            <p className="text-sm sm:text-lg font-medium tracking-wide text-brand-300 font-heading">
+              {personalInfo.brand} <span className="text-gray-500 font-light mx-2">•</span> Design Profile & Portfolio
             </p>
           </div>
 
           {/* Philosophy Statement */}
-          <blockquote className="border-l-4 border-brand-500 pl-4 py-1 text-base sm:text-lg italic text-gray-300 font-light leading-relaxed">
+          <blockquote className="border-l-4 border-brand-500 pl-4 py-1 text-sm sm:text-base italic text-gray-300 font-light leading-relaxed">
             "{personalInfo.tagline}"
           </blockquote>
 
-          <p className="text-sm sm:text-base text-gray-400 leading-relaxed max-w-xl">
+          <p className="text-xs sm:text-sm text-gray-400 leading-relaxed max-w-xl">
             Specializing in high-engagement social media campaigns, shelf-ready label & packaging designs, and distinct brand visual identities that communicate purpose and captivate audiences.
           </p>
 
           {/* Action CTAs - Matching Hero Buttons in Image */}
-          <div className="flex flex-wrap items-center gap-4 pt-2">
+          <div className="flex flex-wrap items-center gap-3 pt-1">
             {/* Explore Works Button (Solid White Button like "Get started" in image) */}
             <a
               href="#works"
-              className="px-7 py-3.5 rounded-full bg-white text-black text-xs sm:text-sm font-bold uppercase tracking-widest hover:bg-gray-200 transition-all duration-300 shadow-glow-white flex items-center gap-2"
+              className="px-7 py-3 rounded-full bg-white text-black text-xs sm:text-sm font-bold uppercase tracking-widest hover:bg-gray-200 transition-all duration-300 shadow-[0_0_25px_rgba(255,255,255,0.4)] flex items-center gap-2"
             >
               <span>Explore Works</span>
               <ChevronDown className="w-4 h-4" />
@@ -428,7 +548,7 @@ export default function Hero() {
               href={personalInfo.whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-3.5 rounded-full bg-brand-600 text-white text-xs sm:text-sm font-bold uppercase tracking-widest hover:bg-brand-500 transition-all duration-300 shadow-glow flex items-center gap-2"
+              className="px-6 py-3 rounded-full bg-brand-600 text-white text-xs sm:text-sm font-bold uppercase tracking-widest hover:bg-brand-500 transition-all duration-300 shadow-[0_0_30px_rgba(147,51,234,0.5)] flex items-center gap-2"
             >
               <MessageCircle className="w-4 h-4" />
               <span>Let's Discuss</span>
@@ -439,89 +559,114 @@ export default function Hero() {
               href={personalInfo.behanceUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-3.5 rounded-full bg-[#130b24] border border-[#2e1852] text-gray-200 text-xs sm:text-sm font-semibold uppercase tracking-widest hover:bg-[#20123b] hover:text-white hover:border-brand-500 transition-all duration-300 flex items-center gap-1.5"
+              className="px-5 py-3 rounded-full bg-[#130b24] border border-[#2e1852] text-gray-200 text-xs sm:text-sm font-semibold uppercase tracking-widest hover:bg-[#20123b] hover:text-white hover:border-brand-500 transition-all duration-300 flex items-center gap-1.5"
             >
               <span>Behance</span>
               <ArrowUpRight className="w-4 h-4" />
             </a>
           </div>
 
-          {/* 4 Sleek Stat Cards with Animated Counter (from 0 to 600+) */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-[#261442]">
-            {/* Stat 1: 600+ Projects with Animated Counter */}
-            <div className="bg-[#0e081e]/80 border border-[#261542] hover:border-brand-500/50 p-3.5 sm:p-4 rounded-2xl backdrop-blur-md transition-all group">
-              <div className="w-8 h-8 rounded-lg bg-[#1b0e35] border border-[#3b1d6b] flex items-center justify-center text-brand-400 mb-2 group-hover:scale-110 transition-transform">
-                <Layers className="w-4 h-4" />
-              </div>
-              <p className="text-xl sm:text-2xl font-extrabold font-heading text-white tracking-tight">
-                <AnimatedCounter end={600} duration={2200} suffix="+" />
-              </p>
-              <p className="text-[10px] sm:text-xs text-gray-400 font-medium uppercase tracking-wider mt-0.5">
-                Projects Done
-              </p>
-            </div>
-
-            {/* Stat 2: 5+ Years Experience */}
-            <div className="bg-[#0e081e]/80 border border-[#261542] hover:border-brand-500/50 p-3.5 sm:p-4 rounded-2xl backdrop-blur-md transition-all group">
-              <div className="w-8 h-8 rounded-lg bg-[#1b0e35] border border-[#3b1d6b] flex items-center justify-center text-brand-400 mb-2 group-hover:scale-110 transition-transform">
-                <Award className="w-4 h-4" />
-              </div>
-              <p className="text-xl sm:text-2xl font-extrabold font-heading text-white tracking-tight">
-                <AnimatedCounter end={5} duration={1600} suffix="+" />
-              </p>
-              <p className="text-[10px] sm:text-xs text-gray-400 font-medium uppercase tracking-wider mt-0.5">
-                Years Exp
-              </p>
-            </div>
-
-            {/* Stat 3: 100% Satisfaction Rate */}
-            <div className="bg-[#0e081e]/80 border border-[#261542] hover:border-brand-500/50 p-3.5 sm:p-4 rounded-2xl backdrop-blur-md transition-all group">
-              <div className="w-8 h-8 rounded-lg bg-[#1b0e35] border border-[#3b1d6b] flex items-center justify-center text-brand-400 mb-2 group-hover:scale-110 transition-transform">
-                <Heart className="w-4 h-4" />
-              </div>
-              <p className="text-xl sm:text-2xl font-extrabold font-heading text-white tracking-tight">
-                <AnimatedCounter end={100} duration={2000} suffix="%" />
-              </p>
-              <p className="text-[10px] sm:text-xs text-gray-400 font-medium uppercase tracking-wider mt-0.5">
-                Satisfaction
-              </p>
-            </div>
-
-            {/* Stat 4: Fast Turnaround */}
-            <div className="bg-[#0e081e]/80 border border-[#261542] hover:border-brand-500/50 p-3.5 sm:p-4 rounded-2xl backdrop-blur-md transition-all group">
-              <div className="w-8 h-8 rounded-lg bg-[#1b0e35] border border-[#3b1d6b] flex items-center justify-center text-brand-400 mb-2 group-hover:scale-110 transition-transform">
-                <Zap className="w-4 h-4" />
-              </div>
-              <p className="text-xl sm:text-2xl font-extrabold font-heading text-white tracking-tight">
-                24-48h
-              </p>
-              <p className="text-[10px] sm:text-xs text-gray-400 font-medium uppercase tracking-wider mt-0.5">
-                Fast Delivery
-              </p>
-            </div>
-          </div>
-
         </div>
 
-        {/* Right Column: 3D Glass Torus, Rings & Spheres with Scroll Parallax (Replacing Portrait Photo) */}
-        <div className="lg:col-span-5 xl:col-span-5 flex justify-center items-center w-full min-w-0">
-          <HeroGlassCircles />
+        {/* Right Column: Giant 3D Glass Rings & Spheres (Visually Fills the Right Side) */}
+        <div className="lg:col-span-6 xl:col-span-7 flex justify-center items-center w-full min-h-[420px] sm:min-h-[480px] lg:min-h-[560px] xl:min-h-[620px]">
+          <HeroGlassCircles mouseX={mousePos.x} mouseY={mousePos.y} />
         </div>
 
       </div>
 
-      {/* Bottom Scroll Down Indicator */}
-      <div className="pt-10 flex flex-col items-center justify-center text-center">
+      {/* --- ROW 2: FULL-WIDTH HORIZONTAL STAT CARDS BAR (Anchoring the Entire Bottom) --- */}
+      <div className="w-full max-w-[1600px] mx-auto pt-6 sm:pt-8 pb-3">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          
+          {/* Stat 1: 600+ Commercial Projects with Animated Counter */}
+          <div className="bg-[#0e071e]/75 border border-[#261542] hover:border-brand-500/70 p-3.5 sm:p-5 rounded-2xl backdrop-blur-xl transition-all duration-300 group hover:-translate-y-1 shadow-[0_8px_30px_rgba(0,0,0,0.4)]">
+            <div className="flex items-center justify-between mb-2.5">
+              <div className="w-9 h-9 rounded-xl bg-[#1c0d38] border border-[#3b1d6b] flex items-center justify-center text-brand-400 group-hover:scale-110 group-hover:bg-brand-600 group-hover:text-white transition-all shadow-sm">
+                <Layers className="w-4 h-4" />
+              </div>
+              <span className="text-[10px] uppercase font-bold text-brand-400/80 tracking-widest px-2.5 py-0.5 rounded-full bg-brand-950/60 border border-brand-800/40">
+                Delivered
+              </span>
+            </div>
+            <p className="text-xl sm:text-2xl lg:text-3xl font-black font-heading text-white tracking-tight">
+              <AnimatedCounter end={600} duration={2000} suffix="+" />
+            </p>
+            <p className="text-[11px] sm:text-xs text-gray-400 font-medium uppercase tracking-wider mt-0.5">
+              Projects Completed
+            </p>
+          </div>
+
+          {/* Stat 2: 5+ Years Experience */}
+          <div className="bg-[#0e071e]/75 border border-[#261542] hover:border-brand-500/70 p-3.5 sm:p-5 rounded-2xl backdrop-blur-xl transition-all duration-300 group hover:-translate-y-1 shadow-[0_8px_30px_rgba(0,0,0,0.4)]">
+            <div className="flex items-center justify-between mb-2.5">
+              <div className="w-9 h-9 rounded-xl bg-[#1c0d38] border border-[#3b1d6b] flex items-center justify-center text-brand-400 group-hover:scale-110 group-hover:bg-brand-600 group-hover:text-white transition-all shadow-sm">
+                <Award className="w-4 h-4" />
+              </div>
+              <span className="text-[10px] uppercase font-bold text-brand-400/80 tracking-widest px-2.5 py-0.5 rounded-full bg-brand-950/60 border border-brand-800/40">
+                Industry
+              </span>
+            </div>
+            <p className="text-xl sm:text-2xl lg:text-3xl font-black font-heading text-white tracking-tight">
+              <AnimatedCounter end={5} duration={1500} suffix="+" />
+            </p>
+            <p className="text-[11px] sm:text-xs text-gray-400 font-medium uppercase tracking-wider mt-0.5">
+              Years Experience
+            </p>
+          </div>
+
+          {/* Stat 3: 100% Satisfaction Rate */}
+          <div className="bg-[#0e071e]/75 border border-[#261542] hover:border-brand-500/70 p-3.5 sm:p-5 rounded-2xl backdrop-blur-xl transition-all duration-300 group hover:-translate-y-1 shadow-[0_8px_30px_rgba(0,0,0,0.4)]">
+            <div className="flex items-center justify-between mb-2.5">
+              <div className="w-9 h-9 rounded-xl bg-[#1c0d38] border border-[#3b1d6b] flex items-center justify-center text-brand-400 group-hover:scale-110 group-hover:bg-brand-600 group-hover:text-white transition-all shadow-sm">
+                <Heart className="w-4 h-4" />
+              </div>
+              <span className="text-[10px] uppercase font-bold text-brand-400/80 tracking-widest px-2.5 py-0.5 rounded-full bg-brand-950/60 border border-brand-800/40">
+                Rating 5.0
+              </span>
+            </div>
+            <p className="text-xl sm:text-2xl lg:text-3xl font-black font-heading text-white tracking-tight">
+              <AnimatedCounter end={100} duration={1800} suffix="%" />
+            </p>
+            <p className="text-[11px] sm:text-xs text-gray-400 font-medium uppercase tracking-wider mt-0.5">
+              Client Satisfaction
+            </p>
+          </div>
+
+          {/* Stat 4: Fast Turnaround Time */}
+          <div className="bg-[#0e071e]/75 border border-[#261542] hover:border-brand-500/70 p-3.5 sm:p-5 rounded-2xl backdrop-blur-xl transition-all duration-300 group hover:-translate-y-1 shadow-[0_8px_30px_rgba(0,0,0,0.4)]">
+            <div className="flex items-center justify-between mb-2.5">
+              <div className="w-9 h-9 rounded-xl bg-[#1c0d38] border border-[#3b1d6b] flex items-center justify-center text-brand-400 group-hover:scale-110 group-hover:bg-brand-600 group-hover:text-white transition-all shadow-sm">
+                <Zap className="w-4 h-4" />
+              </div>
+              <span className="text-[10px] uppercase font-bold text-brand-400/80 tracking-widest px-2.5 py-0.5 rounded-full bg-brand-950/60 border border-brand-800/40">
+                Fast Pace
+              </span>
+            </div>
+            <p className="text-xl sm:text-2xl lg:text-3xl font-black font-heading text-white tracking-tight">
+              24-48h
+            </p>
+            <p className="text-[11px] sm:text-xs text-gray-400 font-medium uppercase tracking-wider mt-0.5">
+              Turnaround Delivery
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      {/* --- ROW 3: SCROLL DOWN INDICATOR --- */}
+      <div className="pt-2 pb-1 flex flex-col items-center justify-center text-center">
         <a
           href="#services"
-          className="group flex flex-col items-center gap-2 text-[11px] uppercase tracking-widest font-semibold text-gray-400 hover:text-brand-400 transition-colors"
+          className="group flex flex-col items-center gap-1.5 text-[10px] sm:text-[11px] uppercase tracking-widest font-semibold text-gray-400 hover:text-brand-400 transition-colors"
         >
           <span className="tracking-[0.25em]">Scroll Down</span>
-          <div className="w-7 h-10 rounded-full border-2 border-[#3b1d6b] flex items-start justify-center p-1.5 group-hover:border-brand-500 transition-colors">
-            <span className="w-1.5 h-2.5 rounded-full bg-brand-400 animate-bounce-slow" />
+          <div className="w-5 h-8 rounded-full border-2 border-[#3b1d6b] flex items-start justify-center p-1 group-hover:border-brand-500 transition-colors">
+            <span className="w-1 h-2 rounded-full bg-brand-400 animate-bounce-slow" />
           </div>
         </a>
       </div>
+
     </section>
   );
 }
