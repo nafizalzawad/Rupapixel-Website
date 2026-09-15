@@ -31,9 +31,9 @@ export default function ServicesSection() {
   const [model, setModel] = useState('project');
 
   return (
-    <section id="services" className="relative py-28 px-4 sm:px-8 max-w-7xl mx-auto border-t border-[#261542]/80 overflow-hidden">
+    <section id="services" className="relative py-28 px-4 sm:px-6 lg:px-10 xl:px-12 w-full max-w-[1560px] mx-auto border-t border-[#261542]/80 overflow-hidden">
       {/* Background Top Ambient Purple Aura */}
-      <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[750px] h-[320px] bg-gradient-to-b from-[#8b5cf6]/25 via-[#6b21a8]/15 to-transparent rounded-full blur-[110px] pointer-events-none -z-10" />
+      <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[900px] h-[340px] bg-gradient-to-b from-[#8b5cf6]/25 via-[#6b21a8]/15 to-transparent rounded-full blur-[120px] pointer-events-none -z-10" />
 
       {/* Section Header Matching Reference Image */}
       <div className="text-center max-w-3xl mx-auto mb-16 space-y-5">
@@ -82,8 +82,8 @@ export default function ServicesSection() {
         </div>
       </div>
 
-      {/* Services Tiles Grid (Matching the 3D Assets Instantly Cards & Texture) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 relative z-10">
+      {/* Services Tiles Grid (Wider cards with synchronized height alignments) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 xl:gap-7 relative z-10">
         {mainServices.map((service, index) => {
           const IconComponent = icons[index % icons.length];
           const highlight = serviceHighlights[index % serviceHighlights.length];
@@ -115,8 +115,8 @@ export default function ServicesSection() {
 
               {/* Top Section: Title & Subtitle */}
               <div className="relative z-10 space-y-4">
-                {/* Header Row: Icon & Tag Badge */}
-                <div className="flex items-center justify-between">
+                {/* Header Row: Icon & Tag Badge (Fixed Height for exact baseline alignment) */}
+                <div className="h-12 flex items-center justify-between">
                   <div
                     className={`w-11 h-11 rounded-2xl flex items-center justify-center transition-colors duration-300 ${
                       isFeatured
@@ -138,29 +138,31 @@ export default function ServicesSection() {
                   </span>
                 </div>
 
-                {/* Service Heading & Tagline with aligned min-heights */}
+                {/* Service Heading & Tagline with standardized synchronized heights */}
                 <div className="space-y-1.5">
-                  <div className="min-h-[58px] flex items-start">
-                    <h3 className="text-xl sm:text-2xl font-bold font-heading text-white group-hover:text-brand-300 transition-colors leading-tight">
+                  <div className="h-[62px] flex items-start">
+                    <h3 className="text-xl sm:text-[22px] lg:text-2xl font-bold font-heading text-white group-hover:text-brand-300 transition-colors leading-tight">
                       {service.title}
                     </h3>
                   </div>
-                  <p className="text-xs text-gray-400 leading-relaxed min-h-[34px] line-clamp-2">
-                    {service.subtitle}
-                  </p>
+                  <div className="h-[38px] flex items-start">
+                    <p className="text-xs text-gray-400 leading-relaxed line-clamp-2">
+                      {service.subtitle}
+                    </p>
+                  </div>
                 </div>
 
-                {/* Metric / Scope Callout (Matching $29/month in Reference Image) */}
-                <div className="pt-2 pb-2 border-b border-white/[0.08] min-h-[78px] flex flex-col justify-end">
-                  <div className="text-2xl sm:text-3xl font-extrabold font-heading text-white tracking-tight">
+                {/* Metric / Scope Callout (Exact Synchronized Height across all 4 cards) */}
+                <div className="h-[74px] flex flex-col justify-center pt-2 pb-2 border-b border-white/[0.08]">
+                  <div className="text-2xl lg:text-[26px] font-black font-heading text-white tracking-tight leading-tight">
                     {model === 'project' ? highlight.project.headline : highlight.retainer.headline}
                   </div>
-                  <div className="text-[11px] font-medium text-brand-300/90 mt-0.5">
+                  <div className="text-[11px] font-medium text-brand-300/90 mt-1 truncate">
                     {model === 'project' ? highlight.project.subline : highlight.retainer.subline}
                   </div>
                 </div>
 
-                {/* Glossy White Button (Matching 'Get started for free' in Reference Image) */}
+                {/* Glossy White Button (100% Horizontal Alignment across all 4 cards) */}
                 <div className="pt-2">
                   <a
                     href={`${personalInfo.whatsappUrl}?text=${encodeURIComponent(
@@ -168,7 +170,7 @@ export default function ServicesSection() {
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full py-3.5 px-3 rounded-2xl bg-gradient-to-b from-white via-white to-[#d4d4d8] text-black font-extrabold text-[11px] sm:text-xs uppercase tracking-wider shadow-[0_2px_12px_rgba(255,255,255,0.2)] hover:shadow-[0_4px_24px_rgba(255,255,255,0.4)] hover:brightness-105 active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-1.5 whitespace-nowrap"
+                    className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-b from-white via-white to-[#d4d4d8] text-black font-extrabold text-xs uppercase tracking-wider shadow-[0_2px_12px_rgba(255,255,255,0.2)] hover:shadow-[0_4px_24px_rgba(255,255,255,0.4)] hover:brightness-105 active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-2 whitespace-nowrap"
                   >
                     <span>Inquire for this Service</span>
                     <ArrowRight className="w-3.5 h-3.5 flex-shrink-0" />
@@ -176,7 +178,7 @@ export default function ServicesSection() {
                 </div>
 
                 {/* Sub-services Checklist (Matching the Bullet Items in Reference Image) */}
-                <div className="pt-4 space-y-2.5">
+                <div className="pt-4 space-y-2.5 min-h-[170px]">
                   {service.items.map((item, i) => (
                     <div key={i} className="flex items-center gap-2.5 text-xs text-gray-300">
                       <div
@@ -195,7 +197,7 @@ export default function ServicesSection() {
               </div>
 
               {/* Bottom Card Footnote (Matching '14 days free trial' in Reference Image) */}
-              <div className="relative z-10 pt-6 mt-6 border-t border-white/[0.08] flex items-center justify-between text-[11px] text-gray-400 font-medium">
+              <div className="relative z-10 pt-5 mt-6 border-t border-white/[0.08] flex items-center justify-between text-[11px] text-gray-400 font-medium">
                 <span>{model === 'project' ? 'Custom Quote' : 'Dedicated Support'}</span>
                 <span className="text-gray-500">•</span>
                 <span>Revisions Included</span>
@@ -206,8 +208,8 @@ export default function ServicesSection() {
       </div>
 
       {/* Floor Dot Matrix Mesh & Ambient Bottom Purple Aura from Reference Image */}
-      <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-full max-w-5xl h-[280px] dot-texture-floor pointer-events-none z-0" />
-      <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-[700px] h-[160px] bg-gradient-to-t from-[#8b5cf6]/30 via-[#6b21a8]/20 to-transparent blur-[90px] rounded-full pointer-events-none z-0" />
+      <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-full max-w-6xl h-[280px] dot-texture-floor pointer-events-none z-0" />
+      <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-[850px] h-[180px] bg-gradient-to-t from-[#8b5cf6]/30 via-[#6b21a8]/20 to-transparent blur-[100px] rounded-full pointer-events-none z-0" />
     </section>
   );
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import ServicesSection from './components/ServicesSection';
@@ -10,6 +10,14 @@ import { personalInfo } from './data/portfolioData';
 import { MessageCircle } from 'lucide-react';
 
 export default function App() {
+  useEffect(() => {
+    if (window.location.hash) {
+      setTimeout(() => {
+        const el = document.querySelector(window.location.hash);
+        if (el) el.scrollIntoView({ behavior: 'auto' });
+      }, 50);
+    }
+  }, []);
   return (
     <div className="min-h-screen bg-[#05020a] text-slate-100 selection:bg-brand-600 selection:text-white relative overflow-x-hidden w-full">
       {/* Sticky / Fixed Navigation */}
