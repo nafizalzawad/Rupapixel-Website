@@ -40,7 +40,7 @@ export default function ServicesSection() {
         {/* Top Trust / Quality Pill Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#1b0d36]/90 border border-[#58269e] text-purple-200 text-xs font-semibold shadow-[0_0_20px_rgba(147,51,234,0.35)] backdrop-blur-md">
           <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
-          <span>Rated 5.0 • 100+ Commercial Projects Completed</span>
+          <span>Rated 5.0 • 600+ Commercial Projects Completed</span>
         </div>
 
         {/* Large Centered Title */}

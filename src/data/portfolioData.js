@@ -5,6 +5,7 @@ export const personalInfo = {
   title: "Graphic Designer & Visual Content Designer",
   specialization: "Social Media Design, Packaging Design & Branding",
   experience: "5+ Years",
+  projects: "600+",
   location: "Bangladesh",
   email: "rupa576937@gmail.com",
   whatsapp: "01882855160",
