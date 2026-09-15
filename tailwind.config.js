@@ -8,22 +8,28 @@ export default {
   theme: {
     extend: {
       colors: {
+        dark: {
+          base: '#05020a',       // Deepest obsidian background from image
+          surface: '#0a0515',    // Slightly elevated surface
+          card: '#0e081c',       // Card background
+          cardHover: '#140c28',  // Hover card background
+          border: '#261542',     // Subtle dark violet border
+          borderLight: '#3b2066',// Highlight border
+          pill: '#150d27',       // Pill button background
+          pillHover: '#231442',  // Pill button hover
+        },
         brand: {
-          50: '#faf7fd',
-          100: '#f3ecfa',
-          200: '#e7dbf5',
-          300: '#d3bded',
-          400: '#b796e4',
-          500: '#996bd8', // Base color specified by user
-          600: '#844fd0',
-          700: '#703dc1',
-          800: '#5d33a1',
-          900: '#4c2c82',
-          950: '#2d1754',
-          dark: '#0f091a',
-          surface: '#171026',
-          card: '#1e1533',
-          pill: '#2a1e45'
+          50: '#faf5ff',
+          100: '#f3e8ff',
+          200: '#e9d5ff',
+          300: '#d8b4fe',
+          400: '#c084fc',
+          500: '#996bd8',        // Designer base purple
+          600: '#8b5cf6',        // Vibrant luminous purple from image glow
+          700: '#7c3aed',
+          800: '#6b21a8',
+          900: '#4c1d95',
+          950: '#2e1065',
         }
       },
       fontFamily: {
@@ -35,8 +41,10 @@ export default {
         '5xl': '2.5rem',
       },
       boxShadow: {
-        'glow': '0 0 40px -10px rgba(153, 107, 216, 0.35)',
-        'glow-lg': '0 0 60px -15px rgba(153, 107, 216, 0.45)',
+        'glow-sm': '0 0 20px -5px rgba(168, 85, 247, 0.3)',
+        'glow': '0 0 35px -5px rgba(168, 85, 247, 0.4)',
+        'glow-lg': '0 0 65px -10px rgba(168, 85, 247, 0.5)',
+        'glow-white': '0 0 25px rgba(255, 255, 255, 0.35)',
       }
     },
   },

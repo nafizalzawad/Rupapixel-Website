@@ -11,7 +11,7 @@ import { MessageCircle } from 'lucide-react';
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-[#faf8fd] text-[#1c152b] selection:bg-brand-500 selection:text-white relative overflow-x-hidden w-full">
+    <div className="min-h-screen bg-[#05020a] text-slate-100 selection:bg-brand-600 selection:text-white relative overflow-x-hidden w-full">
       {/* Sticky / Fixed Navigation */}
       <Navbar />
 
