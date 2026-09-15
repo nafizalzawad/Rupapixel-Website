@@ -41,16 +41,52 @@
   background: #7c3aed;
 }
 
-/* Card gradients and luminous lighting from reference image */
-.bg-obsidian-card {
-  background: linear-gradient(180deg, rgba(20, 11, 38, 0.75) 0%, rgba(10, 5, 20, 0.85) 100%);
-  border: 1px solid rgba(168, 85, 247, 0.16);
-  backdrop-filter: blur(16px);
+/* Pricing & Service Tile Styles from reference image */
+.tile-glass-dark {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(20, 11, 38, 0.6) 30%, rgba(8, 4, 16, 0.95) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
-.bg-obsidian-card:hover {
-  border-color: rgba(168, 85, 247, 0.4);
-  box-shadow: 0 0 35px -5px rgba(147, 51, 234, 0.25);
+.tile-glass-dark:hover {
+  border-color: rgba(168, 85, 247, 0.45);
+  box-shadow: 0 0 40px -8px rgba(147, 51, 234, 0.35);
+}
+
+.tile-glass-purple {
+  background: linear-gradient(180deg, rgba(147, 51, 234, 0.38) 0%, rgba(88, 28, 135, 0.22) 40%, rgba(8, 4, 16, 0.95) 100%);
+  border: 1px solid rgba(192, 132, 252, 0.5);
+  box-shadow: 0 0 50px -10px rgba(147, 51, 234, 0.5), inset 0 1px 1px 0 rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.tile-glass-purple:hover {
+  border-color: rgba(216, 180, 254, 0.8);
+  box-shadow: 0 0 60px -5px rgba(168, 85, 247, 0.65), inset 0 1px 2px 0 rgba(255, 255, 255, 0.35);
+}
+
+/* Halftone / Dot Grid Matrix Textures */
+.dot-texture-light {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.22) 1.2px, transparent 1.2px);
+  background-size: 13px 13px;
+  -webkit-mask-image: radial-gradient(ellipse 95% 75% at 50% 0%, black 25%, transparent 85%);
+  mask-image: radial-gradient(ellipse 95% 75% at 50% 0%, black 25%, transparent 85%);
+}
+
+.dot-texture-purple {
+  background-image: radial-gradient(rgba(216, 180, 254, 0.42) 1.2px, transparent 1.2px);
+  background-size: 13px 13px;
+  -webkit-mask-image: radial-gradient(ellipse 95% 85% at 50% 0%, black 30%, transparent 90%);
+  mask-image: radial-gradient(ellipse 95% 85% at 50% 0%, black 30%, transparent 90%);
+}
+
+.dot-texture-floor {
+  background-image: radial-gradient(rgba(192, 132, 252, 0.35) 1.4px, transparent 1.4px);
+  background-size: 16px 16px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 50% at 50% 100%, black 20%, transparent 90%);
+  mask-image: radial-gradient(ellipse 70% 50% at 50% 100%, black 20%, transparent 90%);
 }
 
 .purple-glow-radial {
