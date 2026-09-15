@@ -33,6 +33,7 @@ export const mainServices = [
   {
     number: "01",
     title: "Social Media Design",
+    price: "Starting From $10",
     subtitle: "High-engagement campaigns & viral visuals",
     description: "Creating thumb-stopping visual assets for Instagram, Facebook, and modern digital feeds designed to boost brand awareness and conversion.",
     items: [
@@ -46,6 +47,7 @@ export const mainServices = [
   {
     number: "02",
     title: "Packaging & Label Design",
+    price: "Starting From $30",
     subtitle: "Shelf-ready commercial packaging & mockups",
     description: "Transforming retail and e-commerce products with sophisticated packaging and label designs that captivate consumers and tell a brand story.",
     items: [
@@ -59,6 +61,7 @@ export const mainServices = [
   {
     number: "03",
     title: "Branding & Visual Identity",
+    price: "Starting From $60",
     subtitle: "Cohesive systems that define lasting brands",
     description: "Crafting comprehensive visual identity systems including bespoke logos, color theory palettes, typographic standards, and brand guides.",
     items: [
@@ -72,6 +75,7 @@ export const mainServices = [
   {
     number: "04",
     title: "Print & Marketing Elements",
+    price: "Starting From $20",
     subtitle: "Tangible print & digital marketing media",
     description: "Developing tangible marketing materials and digital conversion assets that convey authority, quality, and meticulous attention to detail.",
     items: [

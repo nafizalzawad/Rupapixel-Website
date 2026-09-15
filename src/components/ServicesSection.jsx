@@ -6,23 +6,23 @@ const icons = [Share2, Package, Palette, Printer];
 
 const serviceHighlights = [
   {
-    project: { headline: "High-Impact", subline: "Tailored for engagement & viral reach" },
-    retainer: { headline: "Dedicated Queue", subline: "Ongoing social posts & ad campaigns" },
+    project: { headline: "Starting From $10", subline: "Per Post / Creative Campaign" },
+    retainer: { headline: "$199 / Month", subline: "Dedicated queue & weekly creatives" },
     badge: "Social Media Specialist"
   },
   {
-    project: { headline: "Shelf-Ready", subline: "3D packaging mockups & print files" },
-    retainer: { headline: "Product Pipeline", subline: "Continuous label & packaging line" },
+    project: { headline: "Starting From $30", subline: "3D packaging mockups & print files" },
+    retainer: { headline: "$399 / Month", subline: "Continuous label & packaging line" },
     badge: "Most Requested"
   },
   {
-    project: { headline: "Full Identity", subline: "Vector logos, palettes & guidelines" },
-    retainer: { headline: "Brand Advisory", subline: "Design system expansion & assets" },
+    project: { headline: "Starting From $60", subline: "Full vector logos, guide & palettes" },
+    retainer: { headline: "$599 / Month", subline: "Complete brand architecture & assets" },
     badge: "Complete System"
   },
   {
-    project: { headline: "Commercial Print", subline: "Brochures, menus & digital assets" },
-    retainer: { headline: "Marketing Retainer", subline: "Weekly print collateral & banners" },
+    project: { headline: "Starting From $20", subline: "Flyers, brochures & marketing print" },
+    retainer: { headline: "$299 / Month", subline: "Weekly marketing collateral & banners" },
     badge: "High-Conversion"
   }
 ];

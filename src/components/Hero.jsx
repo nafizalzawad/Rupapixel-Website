@@ -83,7 +83,7 @@ function HeroGlassCircles({ mouseX = 0, mouseY = 0 }) {
 
   return (
     <div
-      className="relative w-full max-w-[580px] sm:max-w-[650px] lg:max-w-[720px] xl:max-w-[800px] aspect-[1.16/1] mx-auto flex items-center justify-center select-none"
+      className="relative w-full max-w-[420px] sm:max-w-[480px] lg:max-w-[540px] xl:max-w-[580px] max-h-[44vh] aspect-[1.18/1] mx-auto flex items-center justify-center select-none"
       style={{
         perspective: '1500px',
         transformStyle: 'preserve-3d',
@@ -485,7 +485,7 @@ export default function Hero() {
       ref={heroRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative min-h-screen w-full overflow-hidden pt-20 sm:pt-24 lg:pt-22 pb-6 px-4 sm:px-8 lg:px-12 xl:px-16 flex flex-col justify-between bg-gradient-to-b from-[#110526] via-[#090217] to-[#05020a]"
+      className="relative h-[100dvh] max-h-[100dvh] min-h-[560px] w-full overflow-hidden pt-16 sm:pt-18 lg:pt-20 pb-2 px-4 sm:px-6 lg:px-10 xl:px-14 flex flex-col justify-between bg-gradient-to-b from-[#110526] via-[#090217] to-[#05020a]"
     >
       {/* --- Full-Bleed Ambient Lighting Nebulae (Reaches all edges) --- */}
       <div className="absolute top-0 right-0 w-[85vw] max-w-[1300px] h-[750px] bg-gradient-to-b from-[#7c3aed]/25 via-[#6b21a8]/15 to-transparent rounded-full blur-[140px] pointer-events-none -z-10" />
@@ -502,45 +502,45 @@ export default function Hero() {
       />
 
       {/* --- ROW 1: SPLIT HERO (Text & CTAs Left, Giant 3D Glass Rings Right) --- */}
-      <div className="w-full max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-12 items-center flex-1 my-auto">
+      <div className="w-full max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 xl:gap-8 items-center flex-1 my-auto min-h-0">
         
         {/* Left Column: Typographic & Profile Showcase */}
-        <div className="lg:col-span-6 xl:col-span-5 flex flex-col justify-center space-y-4 sm:space-y-5 w-full z-10">
+        <div className="lg:col-span-6 xl:col-span-5 flex flex-col justify-center space-y-3 sm:space-y-4 w-full z-10">
           
           {/* Profession Pill / Tag - Glowing Purple Accent from Reference Image */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1c0d38] border border-[#58269e] text-purple-200 text-xs uppercase tracking-wider font-bold w-fit shadow-[0_0_20px_rgba(147,51,234,0.35)]">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#1c0d38] border border-[#58269e] text-purple-200 text-[11px] uppercase tracking-wider font-bold w-fit shadow-[0_0_15px_rgba(147,51,234,0.3)]">
             <Sparkles className="w-3.5 h-3.5 text-brand-400 flex-shrink-0" />
             <span>Graphic & Visual Content Designer</span>
           </div>
 
           {/* Large Hero Title - Pure White Typography */}
-          <div className="space-y-1 sm:space-y-2">
-            <h1 className="text-3xl sm:text-5xl md:text-6xl xl:text-7xl font-black font-heading text-white tracking-tight uppercase leading-[1.05]">
+          <div className="space-y-0.5 sm:space-y-1">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-black font-heading text-white tracking-tight uppercase leading-[1.04]">
               {personalInfo.name}
             </h1>
-            <p className="text-sm sm:text-lg font-medium tracking-wide text-brand-300 font-heading">
+            <p className="text-xs sm:text-sm md:text-base font-medium tracking-wide text-brand-300 font-heading">
               {personalInfo.brand} <span className="text-gray-500 font-light mx-2">•</span> Design Profile & Portfolio
             </p>
           </div>
 
           {/* Philosophy Statement */}
-          <blockquote className="border-l-4 border-brand-500 pl-4 py-1 text-sm sm:text-base italic text-gray-300 font-light leading-relaxed">
+          <blockquote className="border-l-4 border-brand-500 pl-3 py-0.5 text-xs sm:text-sm italic text-gray-300 font-light leading-snug">
             "{personalInfo.tagline}"
           </blockquote>
 
-          <p className="text-xs sm:text-sm text-gray-400 leading-relaxed max-w-xl">
+          <p className="text-xs sm:text-sm text-gray-400 leading-relaxed max-w-lg line-clamp-2 sm:line-clamp-3">
             Specializing in high-engagement social media campaigns, shelf-ready label & packaging designs, and distinct brand visual identities that communicate purpose and captivate audiences.
           </p>
 
           {/* Action CTAs - Matching Hero Buttons in Image */}
-          <div className="flex flex-wrap items-center gap-3 pt-1">
+          <div className="flex flex-wrap items-center gap-2.5 pt-0.5">
             {/* Explore Works Button (Solid White Button like "Get started" in image) */}
             <a
               href="#works"
-              className="px-7 py-3 rounded-full bg-white text-black text-xs sm:text-sm font-bold uppercase tracking-widest hover:bg-gray-200 transition-all duration-300 shadow-[0_0_25px_rgba(255,255,255,0.4)] flex items-center gap-2"
+              className="px-6 py-2.5 rounded-full bg-white text-black text-xs font-bold uppercase tracking-wider hover:bg-gray-200 transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.35)] flex items-center gap-2"
             >
               <span>Explore Works</span>
-              <ChevronDown className="w-4 h-4" />
+              <ChevronDown className="w-3.5 h-3.5" />
             </a>
 
             {/* Direct WhatsApp Consultation (Glowing Purple Pill Button) */}
@@ -548,9 +548,9 @@ export default function Hero() {
               href={personalInfo.whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-3 rounded-full bg-brand-600 text-white text-xs sm:text-sm font-bold uppercase tracking-widest hover:bg-brand-500 transition-all duration-300 shadow-[0_0_30px_rgba(147,51,234,0.5)] flex items-center gap-2"
+              className="px-5 py-2.5 rounded-full bg-brand-600 text-white text-xs font-bold uppercase tracking-wider hover:bg-brand-500 transition-all duration-300 shadow-[0_0_25px_rgba(147,51,234,0.45)] flex items-center gap-2"
             >
-              <MessageCircle className="w-4 h-4" />
+              <MessageCircle className="w-3.5 h-3.5" />
               <span>Let's Discuss</span>
             </a>
 
@@ -559,94 +559,94 @@ export default function Hero() {
               href={personalInfo.behanceUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-5 py-3 rounded-full bg-[#130b24] border border-[#2e1852] text-gray-200 text-xs sm:text-sm font-semibold uppercase tracking-widest hover:bg-[#20123b] hover:text-white hover:border-brand-500 transition-all duration-300 flex items-center gap-1.5"
+              className="px-4 py-2.5 rounded-full bg-[#130b24] border border-[#2e1852] text-gray-200 text-xs font-semibold uppercase tracking-wider hover:bg-[#20123b] hover:text-white hover:border-brand-500 transition-all duration-300 flex items-center gap-1.5"
             >
               <span>Behance</span>
-              <ArrowUpRight className="w-4 h-4" />
+              <ArrowUpRight className="w-3.5 h-3.5" />
             </a>
           </div>
 
         </div>
 
         {/* Right Column: Giant 3D Glass Rings & Spheres (Visually Fills the Right Side) */}
-        <div className="lg:col-span-6 xl:col-span-7 flex justify-center items-center w-full min-h-[420px] sm:min-h-[480px] lg:min-h-[560px] xl:min-h-[620px]">
+        <div className="lg:col-span-6 xl:col-span-7 flex justify-center items-center w-full max-h-[46vh]">
           <HeroGlassCircles mouseX={mousePos.x} mouseY={mousePos.y} />
         </div>
 
       </div>
 
       {/* --- ROW 2: FULL-WIDTH HORIZONTAL STAT CARDS BAR (Anchoring the Entire Bottom) --- */}
-      <div className="w-full max-w-[1600px] mx-auto pt-6 sm:pt-8 pb-3">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+      <div className="w-full max-w-[1600px] mx-auto pt-2 pb-1">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3.5">
           
           {/* Stat 1: 600+ Commercial Projects with Animated Counter */}
-          <div className="bg-[#0e071e]/75 border border-[#261542] hover:border-brand-500/70 p-3.5 sm:p-5 rounded-2xl backdrop-blur-xl transition-all duration-300 group hover:-translate-y-1 shadow-[0_8px_30px_rgba(0,0,0,0.4)]">
-            <div className="flex items-center justify-between mb-2.5">
-              <div className="w-9 h-9 rounded-xl bg-[#1c0d38] border border-[#3b1d6b] flex items-center justify-center text-brand-400 group-hover:scale-110 group-hover:bg-brand-600 group-hover:text-white transition-all shadow-sm">
-                <Layers className="w-4 h-4" />
+          <div className="bg-[#0e071e]/75 border border-[#261542] hover:border-brand-500/70 p-2.5 sm:p-3 rounded-xl backdrop-blur-xl transition-all duration-300 group hover:-translate-y-0.5 shadow-lg">
+            <div className="flex items-center justify-between mb-1.5">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#1c0d38] border border-[#3b1d6b] flex items-center justify-center text-brand-400 group-hover:scale-105 group-hover:bg-brand-600 group-hover:text-white transition-all">
+                <Layers className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </div>
-              <span className="text-[10px] uppercase font-bold text-brand-400/80 tracking-widest px-2.5 py-0.5 rounded-full bg-brand-950/60 border border-brand-800/40">
+              <span className="text-[9px] uppercase font-bold text-brand-400/80 tracking-wider px-2 py-0.5 rounded-full bg-brand-950/60 border border-brand-800/40">
                 Delivered
               </span>
             </div>
-            <p className="text-xl sm:text-2xl lg:text-3xl font-black font-heading text-white tracking-tight">
+            <p className="text-lg sm:text-xl lg:text-2xl font-black font-heading text-white tracking-tight">
               <AnimatedCounter end={600} duration={2000} suffix="+" />
             </p>
-            <p className="text-[11px] sm:text-xs text-gray-400 font-medium uppercase tracking-wider mt-0.5">
+            <p className="text-[10px] sm:text-[11px] text-gray-400 font-medium uppercase tracking-wider mt-0.5">
               Projects Completed
             </p>
           </div>
 
           {/* Stat 2: 5+ Years Experience */}
-          <div className="bg-[#0e071e]/75 border border-[#261542] hover:border-brand-500/70 p-3.5 sm:p-5 rounded-2xl backdrop-blur-xl transition-all duration-300 group hover:-translate-y-1 shadow-[0_8px_30px_rgba(0,0,0,0.4)]">
-            <div className="flex items-center justify-between mb-2.5">
-              <div className="w-9 h-9 rounded-xl bg-[#1c0d38] border border-[#3b1d6b] flex items-center justify-center text-brand-400 group-hover:scale-110 group-hover:bg-brand-600 group-hover:text-white transition-all shadow-sm">
-                <Award className="w-4 h-4" />
+          <div className="bg-[#0e071e]/75 border border-[#261542] hover:border-brand-500/70 p-2.5 sm:p-3 rounded-xl backdrop-blur-xl transition-all duration-300 group hover:-translate-y-0.5 shadow-lg">
+            <div className="flex items-center justify-between mb-1.5">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#1c0d38] border border-[#3b1d6b] flex items-center justify-center text-brand-400 group-hover:scale-105 group-hover:bg-brand-600 group-hover:text-white transition-all">
+                <Award className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </div>
-              <span className="text-[10px] uppercase font-bold text-brand-400/80 tracking-widest px-2.5 py-0.5 rounded-full bg-brand-950/60 border border-brand-800/40">
+              <span className="text-[9px] uppercase font-bold text-brand-400/80 tracking-wider px-2 py-0.5 rounded-full bg-brand-950/60 border border-brand-800/40">
                 Industry
               </span>
             </div>
-            <p className="text-xl sm:text-2xl lg:text-3xl font-black font-heading text-white tracking-tight">
+            <p className="text-lg sm:text-xl lg:text-2xl font-black font-heading text-white tracking-tight">
               <AnimatedCounter end={5} duration={1500} suffix="+" />
             </p>
-            <p className="text-[11px] sm:text-xs text-gray-400 font-medium uppercase tracking-wider mt-0.5">
+            <p className="text-[10px] sm:text-[11px] text-gray-400 font-medium uppercase tracking-wider mt-0.5">
               Years Experience
             </p>
           </div>
 
           {/* Stat 3: 100% Satisfaction Rate */}
-          <div className="bg-[#0e071e]/75 border border-[#261542] hover:border-brand-500/70 p-3.5 sm:p-5 rounded-2xl backdrop-blur-xl transition-all duration-300 group hover:-translate-y-1 shadow-[0_8px_30px_rgba(0,0,0,0.4)]">
-            <div className="flex items-center justify-between mb-2.5">
-              <div className="w-9 h-9 rounded-xl bg-[#1c0d38] border border-[#3b1d6b] flex items-center justify-center text-brand-400 group-hover:scale-110 group-hover:bg-brand-600 group-hover:text-white transition-all shadow-sm">
-                <Heart className="w-4 h-4" />
+          <div className="bg-[#0e071e]/75 border border-[#261542] hover:border-brand-500/70 p-2.5 sm:p-3 rounded-xl backdrop-blur-xl transition-all duration-300 group hover:-translate-y-0.5 shadow-lg">
+            <div className="flex items-center justify-between mb-1.5">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#1c0d38] border border-[#3b1d6b] flex items-center justify-center text-brand-400 group-hover:scale-105 group-hover:bg-brand-600 group-hover:text-white transition-all">
+                <Heart className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </div>
-              <span className="text-[10px] uppercase font-bold text-brand-400/80 tracking-widest px-2.5 py-0.5 rounded-full bg-brand-950/60 border border-brand-800/40">
+              <span className="text-[9px] uppercase font-bold text-brand-400/80 tracking-wider px-2 py-0.5 rounded-full bg-brand-950/60 border border-brand-800/40">
                 Rating 5.0
               </span>
             </div>
-            <p className="text-xl sm:text-2xl lg:text-3xl font-black font-heading text-white tracking-tight">
+            <p className="text-lg sm:text-xl lg:text-2xl font-black font-heading text-white tracking-tight">
               <AnimatedCounter end={100} duration={1800} suffix="%" />
             </p>
-            <p className="text-[11px] sm:text-xs text-gray-400 font-medium uppercase tracking-wider mt-0.5">
+            <p className="text-[10px] sm:text-[11px] text-gray-400 font-medium uppercase tracking-wider mt-0.5">
               Client Satisfaction
             </p>
           </div>
 
           {/* Stat 4: Fast Turnaround Time */}
-          <div className="bg-[#0e071e]/75 border border-[#261542] hover:border-brand-500/70 p-3.5 sm:p-5 rounded-2xl backdrop-blur-xl transition-all duration-300 group hover:-translate-y-1 shadow-[0_8px_30px_rgba(0,0,0,0.4)]">
-            <div className="flex items-center justify-between mb-2.5">
-              <div className="w-9 h-9 rounded-xl bg-[#1c0d38] border border-[#3b1d6b] flex items-center justify-center text-brand-400 group-hover:scale-110 group-hover:bg-brand-600 group-hover:text-white transition-all shadow-sm">
-                <Zap className="w-4 h-4" />
+          <div className="bg-[#0e071e]/75 border border-[#261542] hover:border-brand-500/70 p-2.5 sm:p-3 rounded-xl backdrop-blur-xl transition-all duration-300 group hover:-translate-y-0.5 shadow-lg">
+            <div className="flex items-center justify-between mb-1.5">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#1c0d38] border border-[#3b1d6b] flex items-center justify-center text-brand-400 group-hover:scale-105 group-hover:bg-brand-600 group-hover:text-white transition-all">
+                <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </div>
-              <span className="text-[10px] uppercase font-bold text-brand-400/80 tracking-widest px-2.5 py-0.5 rounded-full bg-brand-950/60 border border-brand-800/40">
+              <span className="text-[9px] uppercase font-bold text-brand-400/80 tracking-wider px-2 py-0.5 rounded-full bg-brand-950/60 border border-brand-800/40">
                 Fast Pace
               </span>
             </div>
-            <p className="text-xl sm:text-2xl lg:text-3xl font-black font-heading text-white tracking-tight">
+            <p className="text-lg sm:text-xl lg:text-2xl font-black font-heading text-white tracking-tight">
               24-48h
             </p>
-            <p className="text-[11px] sm:text-xs text-gray-400 font-medium uppercase tracking-wider mt-0.5">
+            <p className="text-[10px] sm:text-[11px] text-gray-400 font-medium uppercase tracking-wider mt-0.5">
               Turnaround Delivery
             </p>
           </div>
@@ -655,14 +655,14 @@ export default function Hero() {
       </div>
 
       {/* --- ROW 3: SCROLL DOWN INDICATOR --- */}
-      <div className="pt-2 pb-1 flex flex-col items-center justify-center text-center">
+      <div className="pt-1 pb-1 flex flex-col items-center justify-center text-center flex-shrink-0">
         <a
           href="#services"
-          className="group flex flex-col items-center gap-1.5 text-[10px] sm:text-[11px] uppercase tracking-widest font-semibold text-gray-400 hover:text-brand-400 transition-colors"
+          className="group flex flex-col items-center gap-1 text-[9px] sm:text-[10px] uppercase tracking-widest font-semibold text-gray-400 hover:text-brand-400 transition-colors"
         >
           <span className="tracking-[0.25em]">Scroll Down</span>
-          <div className="w-5 h-8 rounded-full border-2 border-[#3b1d6b] flex items-start justify-center p-1 group-hover:border-brand-500 transition-colors">
-            <span className="w-1 h-2 rounded-full bg-brand-400 animate-bounce-slow" />
+          <div className="w-4 h-7 rounded-full border border-[#3b1d6b] flex items-start justify-center p-0.5 group-hover:border-brand-500 transition-colors">
+            <span className="w-1 h-1.5 rounded-full bg-brand-400 animate-bounce-slow" />
           </div>
         </a>
       </div>
